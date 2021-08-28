@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BaseUi</string>
+    <string name="button_retry">تلاش مجدد</string>
+    <string name="message_error_loading_web_page">خطا در آماده‌سازی</string>
+    <string name="message_error_no_internet">در حال حاضر به شبکه اینترنت دسترسی ندارید. پس از وصل کردن اینترنت دوباره تلاش کنید.</string>
+    <string name="message_error_something_went_wrong">مشکلی پیش آمده است. لطفا بعدا مجددا تلاش نمایید.</string>
+    <string name="message_error_handshake_certificate_exception">وضعیت اتصال به اینترنت و به‌روز بودن زمان و تاریخ در تنظیمات دستگاه را بررسی نموده و دوباره تلاش کنید.</string>
+    <string name="message_loading_web_page">در حال آماده‌سازی…</string>
+    <string name="title_error_no_internet">عدم دسترسی</string>
+    <string name="title_error_something_went_wrong">اوپس!</string>
+    <string name="title_error_handshake_certificate_exception">خطایی رخ داده</string>
+
+</resources>
