@@ -13,7 +13,7 @@ import dev.armoury.android.widgets.LoadMoreRecyclerListener
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-abstract class ArmouryListViewModel<UA: ArmouryUiAction, LRM : ArmouryListRowModel>(application: Application) :
+abstract class ArmouryListViewModel<UA : ArmouryUiAction, LRM : ArmouryListRowModel>(application: Application) :
     ArmouryViewModel<UA>(applicationContext = application) {
 
     //    Variables
@@ -209,7 +209,7 @@ abstract class ArmouryListViewModel<UA: ArmouryUiAction, LRM : ArmouryListRowMod
             _state.value == ArmouryListUtils.States.LOADING_MORE ||
             _state.value == ArmouryListUtils.States.LOADING_REFRESH
 
-    abstract override fun isListRequest(requestCode : Int) : Boolean
+    abstract override fun isListRequest(requestCode: Int): Boolean
 
     protected fun isLoadMoreRequest() = requestType == ArmouryListUtils.RequestTypes.LOAD_MORE
 

@@ -9,6 +9,7 @@ abstract class LoadMoreRecyclerListener : RecyclerView.OnScrollListener() {
      * The total number of items in the dataset after the last load
      */
     private var mPreviousTotal = 0
+
     /**
      * True if we are still waiting for the last set of data to load.
      */
@@ -21,7 +22,8 @@ abstract class LoadMoreRecyclerListener : RecyclerView.OnScrollListener() {
         val visibleItemCount = recyclerView.childCount
         //        We are going to show
         val totalItemCount = recyclerView.adapter?.itemCount ?: 0
-        val firstVisibleItem = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+        val firstVisibleItem =
+            (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
         if (mLoading) {
             if (totalItemCount > mPreviousTotal) {

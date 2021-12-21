@@ -2,7 +2,6 @@ package dev.armoury.android.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,23 +9,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryViewModel
 import timber.log.Timber
 
-abstract class ArmouryFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : ArmouryViewModel<UA>> : Fragment() {
+abstract class ArmouryFragment<UA : ArmouryUiAction, T : ViewDataBinding, V : ArmouryViewModel<UA>> :
+    Fragment() {
 
     protected lateinit var activity: AppCompatActivity
-    protected lateinit var viewDataBinding: T
+    protected var _viewDataBinding: T? = null
+    protected val viewDataBinding get() = _viewDataBinding!!
     protected lateinit var viewModel: V
-//    protected open val refreshLayout : SwipeRefreshLayout? = null
+
+    //    protected open val refreshLayout : SwipeRefreshLayout? = null
     private var fragmentCalledIllegally = false
 
     open fun getRefreshLayout(): SwipeRefreshLayout? = null
 
-    fun customizeBackButtonPressed() : Boolean {
+    fun customizeBackButtonPressed(): Boolean {
         return if (viewModel.customizeBackButton) {
             onBackButtonPressed()
             true
@@ -35,7 +36,7 @@ abstract class ArmouryFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : Arm
         }
     }
 
-    fun customizeNavigateUpPressed() : Boolean {
+    fun customizeNavigateUpPressed(): Boolean {
         return if (viewModel.customizeNavigateUpButton) {
             onNavigateUpPressed()
             true
@@ -78,7 +79,7 @@ abstract class ArmouryFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : Arm
         savedInstanceState: Bundle?
     ): View? {
         logState("View Created")
-        viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false)
+        _viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false)
         viewDataBinding.lifecycleOwner = this
         viewModel = generateViewModel()
         customizeLayout()
@@ -116,6 +117,7 @@ abstract class ArmouryFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : Arm
     override fun onDestroyView() {
         logState("View Destroyed")
         super.onDestroyView()
+        _viewDataBinding = null
     }
 
     override fun onDetach() {
@@ -137,7 +139,7 @@ abstract class ArmouryFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : Arm
         })*/
     }
 
-    internal open fun customizeLayout(){}
+    internal open fun customizeLayout() {}
 
     protected open fun gatherDataFromArgument(arguments: Bundle?) {}
 

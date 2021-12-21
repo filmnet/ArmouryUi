@@ -5,8 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import dev.armoury.android.data.ArmouryFragmentPagerItemModel
 
-
-abstract class ArmouryFragmentPagerAdapter<PIM: ArmouryFragmentPagerItemModel>(
+abstract class ArmouryFragmentPagerAdapter<PIM : ArmouryFragmentPagerItemModel>(
     val items: MutableList<PIM>?,
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle

@@ -14,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionName "0.5.2"
-        versionCode 95
+        versionName "0.5.3"
+        versionCode 96
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -67,7 +67,7 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 
     //  Armoury
-    implementation 'com.github.masoud799:MessageView:0.9.14'
+    implementation 'com.github.masoud799:MessageView:0.9.15'
 
     //  Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'

@@ -5,12 +5,12 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
 import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryViewModel
 import timber.log.Timber
 
-abstract class ArmouryActivity<UA: ArmouryUiAction, T: ViewDataBinding, V: ArmouryViewModel<UA>> : AppCompatActivity() {
+abstract class ArmouryActivity<UA : ArmouryUiAction, T : ViewDataBinding, V : ArmouryViewModel<UA>> :
+    AppCompatActivity() {
 
     /**
      * If an [android.app.Activity] has a getIntent() function and someone
@@ -19,14 +19,14 @@ abstract class ArmouryActivity<UA: ArmouryUiAction, T: ViewDataBinding, V: Armou
      * and base class is going to throw an exception
      */
     private var activityStartedIllegally = false
-    protected lateinit var viewDataBinding : T
-    protected lateinit var viewModel : V
+    protected lateinit var viewDataBinding: T
+    protected lateinit var viewModel: V
 
     override fun onCreate(savedInstanceState: Bundle?) {
         logState("Created")
         if (intent != null) gatherDataFromIntent(intent.extras)
         super.onCreate(savedInstanceState)
-        assert (!activityStartedIllegally) {"You need to use getIntent function of ${javaClass.simpleName} in order to start the activity"}
+        assert(!activityStartedIllegally) { "You need to use getIntent function of ${javaClass.simpleName} in order to start the activity" }
         viewDataBinding = DataBindingUtil.setContentView(this, getLayoutResource())
         viewDataBinding.lifecycleOwner = this
         viewModel = generateViewModel()
@@ -79,12 +79,12 @@ abstract class ArmouryActivity<UA: ArmouryUiAction, T: ViewDataBinding, V: Armou
         viewModel.uiAction.observe(this, this::handleUiAction)
     }
 
-    protected abstract fun gatherDataFromIntent(data : Bundle?)
+    protected abstract fun gatherDataFromIntent(data: Bundle?)
 
     @LayoutRes
-    protected abstract fun getLayoutResource() : Int
+    protected abstract fun getLayoutResource(): Int
 
-    protected abstract fun generateViewModel() : V
+    protected abstract fun generateViewModel(): V
 
     protected abstract fun setViewNeededData()
 
@@ -96,7 +96,7 @@ abstract class ArmouryActivity<UA: ArmouryUiAction, T: ViewDataBinding, V: Armou
         activityStartedIllegally = true
     }
 
-    private fun logState(state : String) {
+    private fun logState(state: String) {
         Timber.v("${javaClass.simpleName} $state")
     }
 
@@ -108,6 +108,6 @@ abstract class ArmouryActivity<UA: ArmouryUiAction, T: ViewDataBinding, V: Armou
         if (currentFragment()?.customizeBackButtonPressed() != true) super.onBackPressed()
     }
 
-    open fun currentFragment() : ArmouryFragment<*,*,*>? = null
+    open fun currentFragment(): ArmouryFragment<*, *, *>? = null
 
 }

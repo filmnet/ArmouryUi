@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryWebViewViewModel
 
-abstract class ArmouryWebViewFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : ArmouryWebViewViewModel<UA>> :
+abstract class ArmouryWebViewFragment<UA : ArmouryUiAction, T : ViewDataBinding, V : ArmouryWebViewViewModel<UA>> :
     ArmouryFragment<UA, T, V>() {
 
     private val webUrlObserver: Observer<String?> by lazy {

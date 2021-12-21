@@ -9,7 +9,7 @@ import dev.armoury.android.adapters.ArmouryFragmentPagerAdapter
 import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryPagerViewModel
 
-abstract class ArmouryPagerFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : ArmouryPagerViewModel<UA, *>> :
+abstract class ArmouryPagerFragment<UA : ArmouryUiAction, T : ViewDataBinding, V : ArmouryPagerViewModel<UA, *>> :
     ArmouryFragment<UA, T, V>() {
 
     abstract fun createViewPagerAdapter(): ArmouryFragmentPagerAdapter<*>

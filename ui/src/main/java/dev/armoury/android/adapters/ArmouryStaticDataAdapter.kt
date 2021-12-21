@@ -4,10 +4,11 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.armoury.android.adapters.viewholder.ArmouryViewHolder
 import dev.armoury.android.data.ArmouryListRowModel
 
-abstract class ArmouryStaticDataAdapter<LRM : ArmouryListRowModel, VH : ArmouryViewHolder<*>> : RecyclerView.Adapter<VH>() {
+abstract class ArmouryStaticDataAdapter<LRM : ArmouryListRowModel, VH : ArmouryViewHolder<*>> :
+    RecyclerView.Adapter<VH>() {
 
     protected var itemsRows: MutableList<LRM> = ArrayList()
-    protected  var totalItemCount = 0
+    protected var totalItemCount = 0
 
     fun submitItems(list: List<LRM>?) {
         itemsRows.clear()

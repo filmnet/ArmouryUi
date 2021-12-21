@@ -2,25 +2,24 @@ package dev.armoury.android.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryViewModel
 import timber.log.Timber
 
-abstract class ArmouryBottomSheetDialogFragment<UA: ArmouryUiAction, T: ViewDataBinding, V : ArmouryViewModel<UA>> :
+abstract class ArmouryBottomSheetDialogFragment<UA : ArmouryUiAction, T : ViewDataBinding, V : ArmouryViewModel<UA>> :
     BottomSheetDialogFragment() {
 
     protected lateinit var activity: AppCompatActivity
-    protected lateinit var viewDataBinding: T
+    protected var _viewDataBinding: T? = null
+    protected val viewDataBinding get() = _viewDataBinding!!
     protected lateinit var viewModel: V
     private var fragmentCalledIllegally = false
     protected lateinit var behavior: BottomSheetBehavior<*>
@@ -54,7 +53,7 @@ abstract class ArmouryBottomSheetDialogFragment<UA: ArmouryUiAction, T: ViewData
         savedInstanceState: Bundle?
     ): View? {
         logState("View Created")
-        viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false)
+        _viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false)
         viewDataBinding.lifecycleOwner = this
         viewModel = generateViewModel()
         setViewNeededData()
@@ -91,6 +90,7 @@ abstract class ArmouryBottomSheetDialogFragment<UA: ArmouryUiAction, T: ViewData
     override fun onDestroyView() {
         logState("View Destroyed")
         super.onDestroyView()
+        _viewDataBinding = null
     }
 
     override fun onDetach() {

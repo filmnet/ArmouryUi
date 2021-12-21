@@ -2,7 +2,6 @@ package dev.armoury.android.utils;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 

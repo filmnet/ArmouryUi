@@ -10,8 +10,10 @@ abstract class CustomTextInputLayout : TextInputLayout {
 
     constructor(context: Context) :
             super(context)
+
     constructor(context: Context, attributeSet: AttributeSet?) :
             super(context, attributeSet)
+
     constructor(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) :
             super(context, attributeSet, defStyleAttr)
 
@@ -44,6 +46,6 @@ abstract class CustomTextInputLayout : TextInputLayout {
 
     }
 
-    protected abstract fun getFontPath() : String
+    protected abstract fun getFontPath(): String
 
 }
