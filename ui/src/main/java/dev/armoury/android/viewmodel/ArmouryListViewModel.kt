@@ -178,9 +178,11 @@ abstract class ArmouryListViewModel<UA : ArmouryUiAction, LRM : ArmouryListRowMo
 
     private fun onLoadingMoreFailed() {
         _adapterRows.value?.let { list ->
-            list[list.lastIndex].let { lastRow ->
-                if (isLoadMoreRow(lastRow)) {
-                    updateLoadMoreRow(lastRow)
+            if (list.isNotEmpty()) {
+                list[list.lastIndex].let { lastRow ->
+                    if (isLoadMoreRow(lastRow)) {
+                        updateLoadMoreRow(lastRow)
+                    }
                 }
             }
         }
@@ -188,9 +190,11 @@ abstract class ArmouryListViewModel<UA : ArmouryUiAction, LRM : ArmouryListRowMo
 
     private fun onLoadMoreRequestResend() {
         _adapterRows.value?.let { list ->
-            list[list.lastIndex].let { lastRow ->
-                if (isLoadMoreRow(lastRow)) {
-                    updateLoadMoreRow(lastRow)
+            if (list.isNotEmpty()) {
+                list[list.lastIndex].let { lastRow ->
+                    if (isLoadMoreRow(lastRow)) {
+                        updateLoadMoreRow(lastRow)
+                    }
                 }
             }
         }
