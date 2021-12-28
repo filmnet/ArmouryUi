@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.content.FileProvider
 import dev.armoury.android.ui.ArmouryFragment
 import java.io.File
@@ -40,8 +41,7 @@ class ArmouryCameraUtils(baseFolderName: String, minimumWith: Int, minimumHeight
                     }
                 }
             }
-        } catch (ignore: Exception) {
-        }
+        } catch (ignore: Exception) {}
     }
 
 

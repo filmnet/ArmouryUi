@@ -9,20 +9,16 @@ open class ArmouryMessageUtils {
 
     companion object {
 
-        fun getProperMessage(
-            context: Context?,
-            messageModel: MessageModel?
-        ) =
+        fun getProperMessage(context: Context?,
+                             messageModel: MessageModel?) =
             messageModel?.let {
                 if (!it.hasDescription()) null
-                else if (!it.descriptionText.isNullOrEmpty()) it.descriptionText
+                else if(!it.descriptionText.isNullOrEmpty()) it.descriptionText
                 else context?.getString(it.descriptionTextRes)
             }
 
-        fun showRefreshErrorMessage(
-            rootView: View, errorMessage: MessageModel,
-            length: Int = Snackbar.LENGTH_LONG
-        ) {
+        fun showRefreshErrorMessage(rootView : View, errorMessage : MessageModel,
+                                    length : Int = Snackbar.LENGTH_LONG) {
             Snackbar.make(
                 rootView,
                 getProperMessage(rootView.context, errorMessage) ?: "",

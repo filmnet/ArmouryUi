@@ -14,8 +14,7 @@ abstract class ArmourySharedPreferencesUtils {
             .apply()
     }
 
-    protected fun getString(key: String, defaultValue: String? = null) =
-        getSharedPreferences().getString(key, defaultValue)
+    protected fun getString(key: String, defaultValue: String? = null) = getSharedPreferences().getString(key, defaultValue)
     /**
      * End of the string related functions
      */
@@ -30,8 +29,7 @@ abstract class ArmourySharedPreferencesUtils {
             .apply()
     }
 
-    protected fun getBoolean(key: String, defaultValue: Boolean = false) =
-        getSharedPreferences().getBoolean(key, defaultValue)
+    protected fun getBoolean(key:String, defaultValue : Boolean = false) = getSharedPreferences() .getBoolean(key, defaultValue)
     /**
      * End of the boolean related functions
      */
@@ -46,10 +44,8 @@ abstract class ArmourySharedPreferencesUtils {
             .putInt(key, value)
             .apply()
     }
-
     //  Get an int value from the shared preferences
-    protected fun getInt(key: String, defaultValue: Int) =
-        getSharedPreferences().getInt(key, defaultValue)
+    protected fun getInt(key: String, defaultValue: Int) = getSharedPreferences().getInt(key, defaultValue)
     /**
      * End of the int related function
      */

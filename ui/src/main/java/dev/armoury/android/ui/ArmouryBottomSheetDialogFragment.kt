@@ -14,12 +14,11 @@ import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryViewModel
 import timber.log.Timber
 
-abstract class ArmouryBottomSheetDialogFragment<UA : ArmouryUiAction, T : ViewDataBinding, V : ArmouryViewModel<UA>> :
+abstract class ArmouryBottomSheetDialogFragment<UA: ArmouryUiAction, T: ViewDataBinding, V : ArmouryViewModel<UA>> :
     BottomSheetDialogFragment() {
 
     protected lateinit var activity: AppCompatActivity
-    protected var _viewDataBinding: T? = null
-    protected val viewDataBinding get() = _viewDataBinding!!
+    protected lateinit var viewDataBinding: T
     protected lateinit var viewModel: V
     private var fragmentCalledIllegally = false
     protected lateinit var behavior: BottomSheetBehavior<*>
@@ -53,7 +52,7 @@ abstract class ArmouryBottomSheetDialogFragment<UA : ArmouryUiAction, T : ViewDa
         savedInstanceState: Bundle?
     ): View? {
         logState("View Created")
-        _viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false)
+        viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false)
         viewDataBinding.lifecycleOwner = this
         viewModel = generateViewModel()
         setViewNeededData()
@@ -90,7 +89,6 @@ abstract class ArmouryBottomSheetDialogFragment<UA : ArmouryUiAction, T : ViewDa
     override fun onDestroyView() {
         logState("View Destroyed")
         super.onDestroyView()
-        _viewDataBinding = null
     }
 
     override fun onDetach() {

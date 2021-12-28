@@ -13,12 +13,10 @@ import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryViewModel
 import timber.log.Timber
 
-abstract class ArmouryDialogFragment<UA : ArmouryUiAction, T : ViewDataBinding, V : ArmouryViewModel<UA>> :
-    DialogFragment() {
+abstract class ArmouryDialogFragment<UA: ArmouryUiAction, T: ViewDataBinding, V : ArmouryViewModel<UA>> : DialogFragment() {
 
     protected lateinit var activity: AppCompatActivity
-    protected var _viewDataBinding: T? = null
-    protected val viewDataBinding get() = _viewDataBinding!!
+    protected lateinit var viewDataBinding: T
     protected lateinit var viewModel: V
     private var fragmentCalledIllegally = false
 
@@ -51,14 +49,13 @@ abstract class ArmouryDialogFragment<UA : ArmouryUiAction, T : ViewDataBinding, 
         savedInstanceState: Bundle?
     ): View? {
         logState("View Created")
-        _viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false)
+        viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutResource(), container, false)
         viewDataBinding.lifecycleOwner = this
         viewModel = generateViewModel()
         setViewNeededData()
         doOtherTasks()
         return viewDataBinding.root
     }
-
     override fun onStart() {
         logState("Started")
         super.onStart()
@@ -87,7 +84,6 @@ abstract class ArmouryDialogFragment<UA : ArmouryUiAction, T : ViewDataBinding, 
     override fun onDestroyView() {
         logState("View Destroyed")
         super.onDestroyView()
-        _viewDataBinding = null
     }
 
     override fun onDetach() {

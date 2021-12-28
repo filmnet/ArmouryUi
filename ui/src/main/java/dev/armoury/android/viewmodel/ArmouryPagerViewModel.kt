@@ -6,9 +6,7 @@ import dev.armoury.android.data.ArmouryFragmentPagerItemModel
 import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.lifecycle.SingleLiveEvent
 
-abstract class ArmouryPagerViewModel<UA : ArmouryUiAction, IM : ArmouryFragmentPagerItemModel>(
-    applicationContext: Application
-) :
+abstract class ArmouryPagerViewModel<UA: ArmouryUiAction, IM : ArmouryFragmentPagerItemModel>(applicationContext: Application) :
     ArmouryViewModel<UA>(applicationContext) {
 
     protected val _tabCurrentItem = SingleLiveEvent<Int?>(null)

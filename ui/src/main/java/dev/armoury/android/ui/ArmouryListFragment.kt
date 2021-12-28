@@ -8,7 +8,7 @@ import dev.armoury.android.utils.ArmouryMessageUtils
 import dev.armoury.android.viewmodel.ArmouryListViewModel
 import dev.armoury.android.widget.data.MessageModel
 
-abstract class ArmouryListFragment<UA : ArmouryUiAction, T : ViewDataBinding, V : ArmouryListViewModel<UA, *>> :
+abstract class ArmouryListFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : ArmouryListViewModel<UA, *>> :
     ArmouryFragment<UA, T, V>() {
 
     abstract override fun getRefreshLayout(): SwipeRefreshLayout?
