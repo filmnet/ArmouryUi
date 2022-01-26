@@ -150,39 +150,34 @@ abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationC
         request: Deferred<Response<T>>,
         requestCode: Int
     ) {
-        if (ArmouryConnectionUtils.isInternetAvailable(context = applicationContext)) {
-            showLoading(isLoading = true, requestCode = requestCode)
-            coroutineScope.launch {
-                try {
-                    val requestResult = request.await()
-                    showLoading(isLoading = false, requestCode = requestCode)
-                    when {
-                        requestResult.isSuccessful ->
-                            onResponseGot(
-                                body = requestResult.body(),
-                                requestCode = requestCode,
-                                responseCode = requestResult.code()
-                            )
-                        else -> {
-                            handleError(
-                                resultCode = requestResult.code(),
-                                errorBody = requestResult.errorBody(),
-                                requestCode = requestCode
-                            )
-                        }
+        showLoading(isLoading = true, requestCode = requestCode)
+        coroutineScope.launch {
+            try {
+                val requestResult = request.await()
+                showLoading(isLoading = false, requestCode = requestCode)
+                when {
+                    requestResult.isSuccessful ->
+                        onResponseGot(
+                            body = requestResult.body(),
+                            requestCode = requestCode,
+                            responseCode = requestResult.code()
+                        )
+                    else -> {
+                        handleError(
+                            resultCode = requestResult.code(),
+                            errorBody = requestResult.errorBody(),
+                            requestCode = requestCode
+                        )
                     }
-                } catch (e: Exception) {
-                    Timber.e("Error in Catch of sending request try: ${e.message}")
-                    showLoading(isLoading = false, requestCode = requestCode)
-                    handleException(
-                        exception = e,
-                        requestCode = requestCode
-                    )
                 }
+            } catch (e: Exception) {
+                Timber.e("Error in Catch of sending request try: ${e.message}")
+                showLoading(isLoading = false, requestCode = requestCode)
+                handleException(
+                    exception = e,
+                    requestCode = requestCode
+                )
             }
-        } else {
-            showLoading(isLoading = false, requestCode = requestCode)
-            onNoInternetConnectionError(requestCode = requestCode)
         }
     }
 
