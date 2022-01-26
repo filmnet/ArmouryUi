@@ -150,34 +150,39 @@ abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationC
         request: Deferred<Response<T>>,
         requestCode: Int
     ) {
-        showLoading(isLoading = true, requestCode = requestCode)
-        coroutineScope.launch {
-            try {
-                val requestResult = request.await()
-                showLoading(isLoading = false, requestCode = requestCode)
-                when {
-                    requestResult.isSuccessful ->
-                        onResponseGot(
-                            body = requestResult.body(),
-                            requestCode = requestCode,
-                            responseCode = requestResult.code()
-                        )
-                    else -> {
-                        handleError(
-                            resultCode = requestResult.code(),
-                            errorBody = requestResult.errorBody(),
-                            requestCode = requestCode
-                        )
+        if (ArmouryConnectionUtils.isInternetAvailable(context = applicationContext)) {
+            showLoading(isLoading = true, requestCode = requestCode)
+            coroutineScope.launch {
+                try {
+                    val requestResult = request.await()
+                    showLoading(isLoading = false, requestCode = requestCode)
+                    when {
+                        requestResult.isSuccessful ->
+                            onResponseGot(
+                                body = requestResult.body(),
+                                requestCode = requestCode,
+                                responseCode = requestResult.code()
+                            )
+                        else -> {
+                            handleError(
+                                resultCode = requestResult.code(),
+                                errorBody = requestResult.errorBody(),
+                                requestCode = requestCode
+                            )
+                        }
                     }
+                } catch (e: Exception) {
+                    Timber.e("Error in Catch of sending request try: ${e.message}")
+                    showLoading(isLoading = false, requestCode = requestCode)
+                    handleException(
+                        exception = e,
+                        requestCode = requestCode
+                    )
                 }
-            } catch (e: Exception) {
-                Timber.e("Error in Catch of sending request try: ${e.message}")
-                showLoading(isLoading = false, requestCode = requestCode)
-                handleException(
-                    exception = e,
-                    requestCode = requestCode
-                )
             }
+        } else {
+            showLoading(isLoading = false, requestCode = requestCode)
+            onNoInternetConnectionError(requestCode = requestCode)
         }
     }
 
@@ -257,27 +262,31 @@ abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationC
                         onSomethingWentWrong(requestCode = requestCode)
                     }
                 } else {
-                    val errorMessageModel = MessageModel(
-                        state = MessageView.States.ERROR,
-                        titleTextRes = R.string.title_error_no_internet,
-                        descriptionTextRes = R.string.message_error_no_internet,
-                        buttonTextRes = R.string.button_retry
-                    )
-                    onRequestFailed(
-                        errorModel = ErrorModel(
-                            messageModel = errorMessageModel,
-                            code = ArmouryConnectionUtils.NO_INTERNET,
-                            responseCode = ArmouryConnectionUtils.NO_INTERNET,
-                            requestCode = requestCode,
-                            reason = RequestErrorReasons.NO_INTERNET
-                        )
-                    )
+                    onNoInternetConnectionError(requestCode = requestCode)
                 }
             }
             else -> {
                 onSomethingWentWrong(requestCode = requestCode)
             }
         }
+    }
+
+    private fun onNoInternetConnectionError(requestCode: Int) {
+        val errorMessageModel = MessageModel(
+            state = MessageView.States.ERROR,
+            titleTextRes = R.string.title_error_no_internet,
+            descriptionTextRes = R.string.message_error_no_internet,
+            buttonTextRes = R.string.button_retry
+        )
+        onRequestFailed(
+            errorModel = ErrorModel(
+                messageModel = errorMessageModel,
+                code = ArmouryConnectionUtils.NO_INTERNET,
+                responseCode = ArmouryConnectionUtils.NO_INTERNET,
+                requestCode = requestCode,
+                reason = RequestErrorReasons.NO_INTERNET
+            )
+        )
     }
 
     private fun onSomethingWentWrong(requestCode: Int) {

@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
 import java.net.URI
 import java.net.URISyntaxException
 
@@ -61,10 +60,16 @@ open class ArmouryConnectionUtils {
             } else {
                 cm?.run {
                     cm.activeNetworkInfo?.run {
-                        if (type == ConnectivityManager.TYPE_WIFI) {
-                            result = true
-                        } else if (type == ConnectivityManager.TYPE_MOBILE) {
-                            result = true
+                        when (type) {
+                            ConnectivityManager.TYPE_WIFI -> {
+                                result = true
+                            }
+                            ConnectivityManager.TYPE_MOBILE -> {
+                                result = true
+                            }
+                            ConnectivityManager.TYPE_ETHERNET -> {
+                                result = true
+                            }
                         }
                     }
                 }
